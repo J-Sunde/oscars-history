@@ -636,6 +636,14 @@ footer {
 #era-5 { background: #0A0C14; color: #8AA4D4; }
 #era-6 { background: #100808; color: #C48A6A; }
 
+/* Hero top row — desktop: statue stays absolute, mobile: flex side by side */
+.hero-top-row {
+  position: relative; z-index: 1;
+  display: flex; align-items: flex-end;
+}
+.hero-text-col {
+  flex: 1;
+}
 .hero-statue {
   position: absolute; right: 6%; bottom: 0;
   height: 88%; width: auto;
@@ -647,12 +655,14 @@ footer {
   opacity: 1;
 }
 @media(max-width: 768px) {
+  .hero-top-row { position: static; align-items: flex-end; gap: 0; }
   .hero-statue {
-    height: 60%; right: 0; opacity: 0.08;
+    position: relative; right: auto; bottom: auto;
+    height: 220px; width: auto; flex-shrink: 0;
+    opacity: 1; z-index: 1;
+    align-self: flex-end;
   }
-  [data-theme="light"] .hero-statue {
-    opacity: 0.18;
-  }
+  [data-theme="light"] .hero-statue { opacity: 1; }
 }
 
 /* ===== HERO ACTION BUTTONS ===== */
@@ -760,12 +770,16 @@ footer {
 <section class="hero" id="hero">
   <div class="hero-bg-layer"></div>
   <div class="hero-grid-overlay"></div>
-  <img src="images/oscar-statue.png" alt="" aria-hidden="true" class="hero-statue">
-  <div class="hero-eyebrow">A (Brief) History of</div>
-  <h1 class="hero-title">
-    The<br>
-    <span class="accent-word">Oscars</span><span class="cursor-blink"></span>
-  </h1>
+  <div class="hero-top-row">
+    <div class="hero-text-col">
+      <div class="hero-eyebrow">A (Brief) History of</div>
+      <h1 class="hero-title">
+        The<br>
+        <span class="accent-word">Oscars</span><span class="cursor-blink"></span>
+      </h1>
+    </div>
+    <img src="images/oscar-statue.png" alt="" aria-hidden="true" class="hero-statue">
+  </div>
   <p class="hero-sub">From a private banquet at the Hollywood Roosevelt Hotel in 1929 to the most watched awards ceremony on Earth — nearly a century of cinema's grandest night. The 98th ceremony airs March 15, 2026.</p>
   <div class="hero-meta">
     <div class="hero-index" data-tip="This is guide #003 in the A (Brief) History of Everything_ series">CHRONOLOGICAL INDEX 003</div>
