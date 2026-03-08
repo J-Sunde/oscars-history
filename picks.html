@@ -7,13 +7,13 @@
 <meta name="description" content="The complete list of nominees for the 98th Academy Awards, March 15, 2026. All 24 categories including Best Picture, Best Director, and acting nominees.">
 <meta name="theme-color" content="#0A0804">
 <link rel="canonical" href="https://abriefhistoryofeverything.com/oscars/nominees">
-<meta property="og:title" content="98th Oscars Nominees 2026 — Complete List">
-<meta property="og:description" content="Every nominee across all 24 categories. The 98th Academy Awards, March 15, 2026.">
-<meta property="og:image" content="https://abriefhistoryofeverything.com/oscars/og-nominees.png">
+<meta property="og:title" content="My 98th Oscars Picks — Can You Beat Me?">
+<meta property="og:description" content="I've picked all 24 categories for the 98th Academy Awards. See my picks and make your own.">
+<meta property="og:image" content="https://abriefhistoryofeverything.com/oscars/og-picks.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://abriefhistoryofeverything.com/oscars/og-nominees.png">
+<meta name="twitter:image" content="https://abriefhistoryofeverything.com/oscars/og-picks.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230A0804'/><text x='6' y='24' font-family='monospace' font-size='18' fill='%23C9A84C'>🏆</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -623,7 +623,7 @@ footer { background: #040302; padding: 32px 80px; border-top: 1px solid var(--bo
   }
 
   shareBtn.addEventListener('click', function(){
-    const url = window.location.origin + '/oscars/picks.html' + '?picks=' + encodePicks();
+    const url = window.location.origin + window.location.pathname + '?picks=' + encodePicks();
     if(navigator.share){ navigator.share({title:'My 98th Oscars Picks',url:url}); }
     else { navigator.clipboard.writeText(url).then(function(){ showToast('✓ Picks link copied!'); }); }
   });
