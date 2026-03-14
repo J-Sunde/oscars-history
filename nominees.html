@@ -620,7 +620,7 @@ footer { background: #040302; padding: 32px 80px; border-top: 1px solid var(--bo
   }
 
   shareBtn.addEventListener('click', function(){
-    const url = window.location.origin + '/oscars/picks.html' + '?picks=' + encodePicks();
+    const url = window.location.origin + '/picks.html' + '?picks=' + encodePicks();
     if(navigator.share){ navigator.share({title:'My 98th Oscars Picks',url:url}); }
     else { navigator.clipboard.writeText(url).then(function(){ showToast('✓ Picks link copied!'); }); }
   });
