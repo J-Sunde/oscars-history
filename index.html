@@ -22,8 +22,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
 
-<script defer src="/_vercel/insights/script.js"></script>
-  
 <style>
 /* ===== CSS VARIABLES ===== */
 :root {
@@ -51,6 +49,11 @@
   --text-muted:  #8A7B65;
   --border:      #3A2E1E;
   --accent:      var(--gold);
+  --accent2:     var(--crimson);
+
+  /* Font aliases — Social Post Generator reads these */
+  --sans:        'Cormorant Garamond', serif;
+  --body:        'DM Sans', sans-serif;
 }
 
 [data-theme="light"] {
@@ -74,6 +77,7 @@ body {
   overflow-x: hidden;
   cursor: none;
   transition: background 0.4s, color 0.4s;
+  padding-bottom: env(safe-area-inset-bottom, 0);
 }
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
@@ -420,28 +424,34 @@ section.era {
   pointer-events: none;
 }
 
-/* ===== PARALLAX QUOTE ===== */
-.parallax-block {
-  height: 360px; overflow: hidden; position: relative;
+/* ===== QUOTE BANDS ===== */
+.quote-band {
+  min-height: 360px; overflow: hidden; position: relative;
   display: flex; align-items: center; justify-content: center;
   border-top: 4px solid var(--charcoal);
   border-bottom: 4px solid var(--charcoal);
 }
-.parallax-inner {
+.quote-band-inner {
   text-align: center; padding: 40px;
-  will-change: transform;
+  max-width: 900px; width: 100%;
 }
-.parallax-quote {
+.pq-text {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(1.7rem, 4vw, 3.3rem);
   font-weight: 300; font-style: italic;
   line-height: 1.3; max-width: 800px;
+  margin: 0 auto;
 }
-.parallax-highlight { font-style: normal; font-weight: 700; }
-.parallax-attr {
+.pq-hl { font-style: normal; font-weight: 700; }
+.pq-attr {
   font-family: 'DM Sans', sans-serif; font-size: 0.65rem;
   letter-spacing: 0.2em; text-transform: uppercase;
   margin-top: 20px; opacity: 0.7;
+}
+.quote-mark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 7rem; line-height: 0.8;
+  opacity: 0.4; display: block; margin-bottom: -1rem;
 }
 
 /* ===== PHOTO STRIP ===== */
@@ -609,50 +619,62 @@ section.era {
 
 /* ===== FOOTER ===== */
 footer {
-  background: #040302; padding: 40px 80px 28px;
+  background: #040302; padding: 40px 80px 32px;
   border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
 }
-.footer-top {
-  display: flex; justify-content: space-between;
-  align-items: flex-start; flex-wrap: wrap; gap: 32px;
-  padding-bottom: 28px;
-  border-bottom: 1px solid var(--border);
+@media(max-width: 768px) {
+  footer { grid-template-columns: 1fr; padding: 32px 20px; }
 }
-.footer-left-title {
+.footer-brand {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1rem; font-weight: 300; letter-spacing: 0.12em;
   color: var(--gold); text-transform: uppercase;
 }
-.footer-left-sub {
-  font-size: 0.65rem; color: var(--text-muted); font-style: italic;
-  margin-top: 4px; font-weight: 300;
+.footer-brand span { color: var(--text-muted); }
+.footer-note {
+  font-size: 0.88rem; color: var(--text-muted);
+  font-weight: 300; line-height: 1.7; margin-top: 6px;
 }
-.footer-social-wrap {
-  display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+.footer-note a { color: var(--text-muted); }
+.footer-note a:hover { color: var(--gold); text-decoration: none; }
+.footer-col-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--text-muted);
+  margin-bottom: 10px;
 }
-.footer-bottom-copy {
-  font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em;
+.footer-bar {
+  background: #040302;
+  border-top: 1px solid var(--border);
+  padding: 0.9rem 80px 3rem;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 0.5rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.1em;
   text-transform: uppercase;
 }
-.footer-social {
-  display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end;
+.footer-bar-links {
+  display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;
 }
+.footer-bar-links a { color: var(--text-muted); }
+.footer-bar-links a:hover { color: var(--gold); text-decoration: none; }
+@media(max-width: 768px) {
+  .footer-bar { padding: 0.9rem 20px 3rem; flex-direction: column; align-items: center; text-align: center; }
+  .footer-bar-links { justify-content: center; }
+}
+/* legacy social styles kept for Bluesky link still in footer */
 .footer-social a {
   font-family: 'DM Sans', sans-serif;
   font-size: 0.64rem; font-weight: 700; letter-spacing: 0.15em;
   text-transform: uppercase; color: var(--text-muted);
   border: 1px solid var(--border); padding: 7px 14px;
   transition: color 0.2s, border-color 0.2s; text-decoration: none;
+  display: inline-block; margin-top: 8px;
 }
 .footer-social a:hover { color: var(--gold); border-color: var(--gold); text-decoration: none; }
-.footer-base {
-  display: flex; justify-content: space-between; align-items: center;
-  padding-top: 20px; flex-wrap: wrap; gap: 8px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.1em;
-}
-.footer-base a { color: var(--text-muted); }
-.footer-base a:hover { color: var(--gold); text-decoration: none; }
 
 /* ===== ERA COLORS ===== */
 #era-1 { background: #0A0804; color: #C9A84C; }
@@ -661,6 +683,28 @@ footer {
 #era-4 { background: #0E0C04; color: #D4C06A; }
 #era-5 { background: #0A0C14; color: #8AA4D4; }
 #era-6 { background: #100808; color: #C48A6A; }
+
+/* ===== LIGHT MODE OVERRIDES ===== */
+[data-theme="light"] #era-1 { background: #F5EED8; color: #8B6914; }
+[data-theme="light"] #era-2 { background: #F8EEF0; color: #8B1A2C; }
+[data-theme="light"] #era-3 { background: #EEF5EF; color: #2A6A3A; }
+[data-theme="light"] #era-4 { background: #F5F0DC; color: #8B7010; }
+[data-theme="light"] #era-5 { background: #EEF0F8; color: #2A3A8B; }
+[data-theme="light"] #era-6 { background: #F5EDEA; color: #8B3A1A; }
+[data-theme="light"] .era-header-card { border-color: currentColor; }
+[data-theme="light"] .event-card { background: #FFFFFF; border-color: var(--border); }
+[data-theme="light"] .closing-section { background: var(--surface); }
+[data-theme="light"] .closing-section .closing-title { color: var(--text); }
+[data-theme="light"] .closing-section .closing-body { color: var(--text-muted); }
+[data-theme="light"] .entity-section { background: var(--surface) !important; }
+[data-theme="light"] .entity-section-header { color: var(--gold-dark); }
+[data-theme="light"] .entity-badge { border-color: var(--border) !important; }
+[data-theme="light"] .marquee-wrap { background: var(--text); }
+[data-theme="light"] .marquee-track { color: var(--ivory); }
+[data-theme="light"] .quote-band .pq-text { color: inherit; }
+[data-theme="light"] .quote-band .pq-attr { color: inherit; opacity: 0.6; }
+[data-theme="light"] .boxoffice-section { border-color: var(--border); }
+[data-theme="light"] .bo-row { background: var(--card-bg); border-color: var(--border); }
 
 /* Hero top row — desktop: statue positioned absolute to .hero, mobile: flex side by side */
 .hero-top-row {
@@ -721,8 +765,8 @@ footer {
 /* ===== PAGE BODY OFFSET FOR SIDE NAV ===== */
 @media(min-width: 901px) {
   .hero, section.era, .stats-grid, .marquee-wrap,
-  .parallax-block, .photo-strip, .boxoffice-section,
-  .entity-section, .ecosystem, .closing-section, footer {
+  .quote-band, .photo-strip, .boxoffice-section,
+  .entity-section, .ecosystem, .closing-section, footer, .footer-bar {
     margin-left: 42px;
   }
 }
@@ -730,22 +774,22 @@ footer {
 /* ===== RESPONSIVE ===== */
 @media (max-width: 960px) {
   .nav-brand { font-size: 0 }
-  .nav-brand::after { content: 'A (BRIEF) HISTORY_'; font-size: 0.55rem; letter-spacing: 0.12em; }
+  .nav-brand::after { content: 'A (BRIEF) HISTORY OF_'; font-size: 0.55rem; letter-spacing: 0.12em; }
   section.era, .boxoffice-section, .entity-section, .ecosystem, .closing-section { padding: 60px 24px 60px 60px; }
   .hero { padding: 0 24px 60px 60px; }
   footer { padding: 24px 24px 24px 60px; }
+  .footer-bar { padding: 0.9rem 24px 3rem 60px; }
 }
 @media (max-width: 768px) {
   .events-grid { grid-template-columns: 1fr; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
-  .photo-strip { grid-template-columns: 1fr; }
+  .photo-strip { grid-template-columns: 1fr 1fr; background: transparent; }
   .photo-cell:nth-child(3) { display: none; }
   section.era, .boxoffice-section, .entity-section, .ecosystem, .closing-section { padding: 48px 20px; }
   .hero { padding: 24px 20px 50px; }
-  footer { padding: 24px 20px; }
-  .footer-top { flex-direction: column; }
-  .footer-social-wrap { align-items: flex-start; }
-  .footer-social { justify-content: flex-start; }
+  footer { padding: 24px 20px; grid-template-columns: 1fr; }
+  .footer-bar { padding: 0.9rem 20px 3rem; flex-direction: column; align-items: center; text-align: center; }
+  .footer-bar-links { justify-content: center; }
   .bo-row { grid-template-columns: 32px 1fr auto; }
   .bo-wins { display: none; }
   /* +2px text bump on mobile */
@@ -777,7 +821,7 @@ footer {
 
 <!-- NAV -->
 <nav class="nav">
-  <a href="https://abriefhistoryofeverything.com" class="nav-brand">A (BRIEF) HISTORY OF EVERYTHING_ <span class="nav-topic">The Oscars</span></a>
+  <a href="https://abriefhistoryofeverything.com" class="nav-brand">A (BRIEF) HISTORY OF EVERYTHING_</a><span class="nav-topic">The Oscars</span>
   <div class="nav-right">
     <button class="theme-btn" id="theme-btn">☀ LIGHT</button>
   </div>
@@ -822,18 +866,17 @@ footer {
   </div>
 
   <div class="hero-actions">
-    <button class="hero-btn" id="share-btn" onclick="
-      if(navigator.share){
-        navigator.share({title:'A (Brief) History of the Oscars',url:window.location.href});
-      } else {
-        navigator.clipboard.writeText(window.location.href);
-        this.textContent='✓ LINK COPIED';
-        setTimeout(()=>this.innerHTML='&#8679; SHARE THIS GUIDE',1800);
-      }
-    ">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-      SHARE THIS GUIDE
-    </button>
+    <div class="share-wrap" id="shareWrap" style="position:relative;">
+      <button class="hero-btn" id="share-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        SHARE THIS GUIDE
+      </button>
+      <div id="shareDropdown" style="display:none;position:absolute;top:calc(100% + 6px);left:0;background:var(--card-bg);border:1px solid var(--border);min-width:180px;z-index:100;">
+        <a href="https://twitter.com/intent/tweet?url=https://abriefhistoryoftheoscars.com&text=A%20(Brief)%20History%20of%20the%20Oscars%20%E2%80%94%20nearly%20a%20century%20of%20cinema%27s%20grandest%20night." target="_blank" style="display:block;padding:10px 16px;font-family:'DM Sans',sans-serif;font-size:0.64rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border);">Share on X</a>
+        <a href="https://bsky.app/intent/compose?text=A%20(Brief)%20History%20of%20the%20Oscars%20%E2%80%94%20nearly%20a%20century%20of%20cinema%27s%20grandest%20night.%20https://abriefhistoryoftheoscars.com" target="_blank" style="display:block;padding:10px 16px;font-family:'DM Sans',sans-serif;font-size:0.64rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border);">Share on Bluesky</a>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://abriefhistoryoftheoscars.com" target="_blank" style="display:block;padding:10px 16px;font-family:'DM Sans',sans-serif;font-size:0.64rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);">Share on LinkedIn</a>
+      </div>
+    </div>
     <!-- PDF DOWNLOAD — uncomment when ready
     <a class="hero-btn" href="oscars.pdf" download>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -847,20 +890,24 @@ footer {
 <!-- STATS GRID -->
 <div class="stats-grid">
   <div class="stat-cell fade-up" style="background:#C9A84C;color:#0A0804;" data-tip="The Academy of Motion Picture Arts and Sciences was founded in 1927 and held the first ceremony in 1929.">
-    <div class="stat-number">1927</div>
+    <div class="stat-number stat-num">1927</div>
     <div class="stat-label">Academy Founded</div>
+    <div class="stat-sub" style="display:none">The Academy of Motion Picture Arts and Sciences was founded in 1927 and held the first ceremony in 1929.</div>
   </div>
   <div class="stat-cell fade-up" style="background:#8B1A2C;color:#F5E4A8;" data-tip="Katharine Hepburn holds the record with 4 wins. Meryl Streep has the most nominations with 21.">
-    <div class="stat-number">21</div>
+    <div class="stat-number stat-num">21</div>
     <div class="stat-label">Most Nominations (Streep)</div>
+    <div class="stat-sub" style="display:none">Katharine Hepburn holds the record with 4 wins. Meryl Streep has the most nominations with 21.</div>
   </div>
   <div class="stat-cell fade-up" style="background:#1A2820;color:#8BC49A;" data-tip="Ben-Hur (1959), Titanic (1997), and The Lord of the Rings: The Return of the King (2003) each won 11 Oscars.">
-    <div class="stat-number">11</div>
+    <div class="stat-number stat-num">11</div>
     <div class="stat-label">Record Wins (3 films)</div>
+    <div class="stat-sub" style="display:none">Ben-Hur (1959), Titanic (1997), and The Lord of the Rings: The Return of the King (2003) each won 11 Oscars.</div>
   </div>
   <div class="stat-cell fade-up" style="background:#1C1A08;color:#D4C06A;" data-tip="The Oscars ceremony is broadcast to approximately 200 countries, with global viewership in the tens of millions.">
-    <div class="stat-number">200</div>
+    <div class="stat-number stat-num">200</div>
     <div class="stat-label">Countries Broadcast</div>
+    <div class="stat-sub" style="display:none">The Oscars ceremony is broadcast to approximately 200 countries, with global viewership in the tens of millions.</div>
   </div>
 </div>
 
@@ -888,32 +935,32 @@ footer {
   </div></div>
   <div class="events-grid">
     <div class="event-card fade-up" data-tip="The first ceremony lasted only 15 minutes and was a private banquet, not a public broadcast.">
-      <div class="event-year">1927 · FOUNDING</div>
+      <div class="event-year card-year">1927 · FOUNDING</div>
       <h3>The Academy is Born</h3>
       <p>Louis B. Mayer founds the Academy of Motion Picture Arts and Sciences, initially as an industry labor relations organization. The gold-plated statuette — reportedly nicknamed "Oscar" — is designed by Cedric Gibbons.</p>
     </div>
     <div class="event-card fade-up" data-tip="Wings, a World War I air combat film, was the first Best Picture winner. Emil Jannings became the first acting winner.">
-      <div class="event-year">1929 · FIRST CEREMONY</div>
+      <div class="event-year card-year">1929 · FIRST CEREMONY</div>
       <h3>The 1st Academy Awards</h3>
       <p>Hollywood Roosevelt Hotel hosts 270 guests for dinner. The ceremony takes 15 minutes. Wings wins Best Picture. The winners had been announced three months earlier in the press — no envelope mystery yet.</p>
     </div>
     <div class="event-card fade-up" data-tip="The 1930 ceremony was the first to be broadcast on radio, expanding the audience dramatically.">
-      <div class="event-year">1930 · BROADCAST</div>
+      <div class="event-year card-year">1930 · BROADCAST</div>
       <h3>Radio Comes to Hollywood</h3>
       <p>The ceremony is broadcast on radio for the first time, transforming the Oscars from an industry dinner into a national cultural event. Public fascination with Hollywood stardom explodes.</p>
     </div>
     <div class="event-card fade-up" data-tip="The secret ballot system was introduced in 1940 after Price Waterhouse was brought in to tabulate votes in 1934.">
-      <div class="event-year">1934 · INTEGRITY</div>
+      <div class="event-year card-year">1934 · INTEGRITY</div>
       <h3>Price Waterhouse Takes Over</h3>
       <p>After newspapers published winners in advance of the ceremony, Price Waterhouse (now PwC) is hired to tabulate ballots in secret. The iconic sealed envelope becomes the ceremony's defining ritual.</p>
     </div>
     <div class="event-card fade-up" data-tip="Gone with the Wind won 8 awards including Best Picture. Hattie McDaniel became the first Black Oscar winner.">
-      <div class="event-year">1940 · HISTORY</div>
+      <div class="event-year card-year">1940 · HISTORY</div>
       <h3>Gone with the Wind Sweeps</h3>
       <p>The ceremony becomes a landmark moment: Gone with the Wind wins a then-record 8 Oscars, and Hattie McDaniel becomes the first African American to win an Academy Award, for Best Supporting Actress.</p>
     </div>
     <div class="event-card fade-up" data-tip="Casablanca's Best Picture win came despite being in competition with several classics including For Whom the Bell Tolls.">
-      <div class="event-year">1943 · CINEMA</div>
+      <div class="event-year card-year">1943 · CINEMA</div>
       <h3>Casablanca Wins Best Picture</h3>
       <p>The wartime classic defeats the competition in a year considered one of Hollywood's greatest. The studio system is at its height — the ceremony celebrates an industry producing cinematic masterworks by the dozen.</p>
     </div>
@@ -947,36 +994,37 @@ footer {
   </div></div>
   <div class="events-grid">
     <div class="event-card fade-up" data-tip="The 1953 ceremony was the first televised, drawing an estimated 40 million viewers.">
-      <div class="event-year">1953 · TV DEBUT</div>
+      <div class="event-year card-year">1953 · TV DEBUT</div>
       <h3>The Ceremony Goes on TV</h3>
       <p>For the first time, the Academy Awards are broadcast on television. An estimated 40 million Americans watch — instantly making the Oscars a TV event and permanently altering how Hollywood relates to the public.</p>
     </div>
     <div class="event-card fade-up" data-tip="Ben-Hur's 11 Oscar wins in 1960 set a record that stood for 37 years.">
-      <div class="event-year">1960 · RECORD</div>
+      <div class="event-year card-year">1960 · RECORD</div>
       <h3>Ben-Hur's Historic 11 Wins</h3>
       <p>William Wyler's epic claims 11 Academy Awards from 12 nominations — a record that would stand untouched for nearly four decades, until Titanic matched it in 1998 and The Return of the King in 2004.</p>
     </div>
     <div class="event-card fade-up" data-tip="Marlon Brando refused his Best Actor Oscar for The Godfather in 1973, sending activist Sacheen Littlefeather to decline on his behalf.">
-      <div class="event-year">1963 · BOYCOTT</div>
+      <div class="event-year card-year">1963 · BOYCOTT</div>
       <h3>Brando & Poitier Change History</h3>
       <p>Sidney Poitier becomes the first Black man to win Best Actor for Lilies of the Field — a watershed moment in an industry still defined by segregation. Hollywood's racial reckoning has begun, though it will take decades.</p>
     </div>
     <div class="event-card fade-up" data-tip="The 1967 ceremony was briefly considered moving out of Hollywood during a period of civil unrest.">
-      <div class="event-year">1967 · SHIFT</div>
+      <div class="event-year card-year">1967 · SHIFT</div>
       <h3>The Studio System Cracks</h3>
       <p>With television siphoning audiences and counterculture challenging Hollywood norms, the old guard faces extinction. A new generation of filmmakers — Coppola, Scorsese, Altman — waits in the wings.</p>
     </div>
   </div>
 </section>
 
-<!-- PARALLAX 1 -->
-<div class="parallax-block" style="background:#0A0804;color:var(--gold)">
-  <div class="parallax-inner" data-parallax="0.11">
-    <div class="parallax-quote">
-      "I have always depended on<br><span class="parallax-highlight" style="color:var(--gold)">the kindness of strangers.</span>"<br>
+<!-- QUOTE BAND 1 -->
+<div class="quote-band" style="background:#0A0804;color:var(--gold)">
+  <div class="quote-band-inner">
+    <div class="pq-text" style="color:var(--gold)">
+      <span class="quote-mark" style="color:var(--gold)">&ldquo;</span>
+      I have always depended on<br><span class="pq-hl" style="color:var(--gold)">the kindness of strangers.</span><br>
       <span style="font-size:0.6em;opacity:0.7">— and Hollywood has never been stranger than when it's honest.</span>
     </div>
-    <div class="parallax-attr" style="color:var(--text-muted)">On Cinema · Culture · The Academy</div>
+    <div class="pq-attr" style="color:var(--text-muted)">On Cinema · Culture · The Academy</div>
   </div>
 </div>
 
@@ -988,22 +1036,22 @@ footer {
   </div></div>
   <div class="events-grid">
     <div class="event-card fade-up" data-tip="The Godfather won Best Picture in 1973. Marlon Brando famously sent Sacheen Littlefeather to decline his Best Actor award.">
-      <div class="event-year">1973 · PROTEST</div>
+      <div class="event-year card-year">1973 · PROTEST</div>
       <h3>Brando Refuses His Oscar</h3>
       <p>Marlon Brando wins Best Actor for The Godfather but sends Apache activist Sacheen Littlefeather to decline the award in protest of Hollywood's treatment of Native Americans — one of the most electrifying moments in Oscar history.</p>
     </div>
     <div class="event-card fade-up" data-tip="The Godfather Part II (1974) became the first sequel to win Best Picture.">
-      <div class="event-year">1974 · SEQUEL</div>
+      <div class="event-year card-year">1974 · SEQUEL</div>
       <h3>The Godfather Part II Makes History</h3>
       <p>Francis Ford Coppola's sequel becomes the first follow-up film to win Best Picture — a validation of the New Hollywood auteur model and of cinema as a continuing artistic conversation rather than disposable entertainment.</p>
     </div>
     <div class="event-card fade-up" data-tip="Annie Hall (1977) won Best Picture over Star Wars — the beginning of the Academy's complicated relationship with blockbusters.">
-      <div class="event-year">1977 · DEBATE</div>
+      <div class="event-year card-year">1977 · DEBATE</div>
       <h3>Annie Hall Beats Star Wars</h3>
       <p>Woody Allen's intimate comedy defeats the highest-grossing film ever made — establishing the Academy's pattern of favoring prestige drama over populist blockbusters, a tension that still defines Oscar campaigns today.</p>
     </div>
     <div class="event-card fade-up" data-tip="The Deer Hunter's 1979 win sparked controversy given the political climate around Vietnam-era films.">
-      <div class="event-year">1979 · POLITICS</div>
+      <div class="event-year card-year">1979 · POLITICS</div>
       <h3>Vietnam on the Main Stage</h3>
       <p>The Deer Hunter wins Best Picture as Hollywood begins reckoning with the Vietnam War. The Oscars increasingly serve as a barometer of where American culture is emotionally processing its recent history.</p>
     </div>
@@ -1018,22 +1066,22 @@ footer {
   </div></div>
   <div class="events-grid">
     <div class="event-card fade-up" data-tip="Rain Man won Best Picture in 1989 after a wide release — a sign of studios' growing interest in Oscars as marketing tools.">
-      <div class="event-year">1984 · STRATEGY</div>
+      <div class="event-year card-year">1984 · STRATEGY</div>
       <h3>The Oscar Campaign Is Born</h3>
       <p>Studios begin treating Oscar nominations as marketing strategies, running dedicated awards campaigns. The art of "for your consideration" advertising — full-page trade ads, screener tapes, wining and dining voters — becomes its own industry.</p>
     </div>
     <div class="event-card fade-up" data-tip="Schindler's List swept the 1994 Oscars, and Steven Spielberg received his first Best Director win.">
-      <div class="event-year">1994 · PRESTIGE</div>
+      <div class="event-year card-year">1994 · PRESTIGE</div>
       <h3>Schindler's List & Spielberg's First Win</h3>
       <p>After years of notable snubs, Steven Spielberg finally wins Best Director for his Holocaust masterwork. The ceremony validates that blockbuster directors can make serious art — and that the Academy can recognize it.</p>
     </div>
     <div class="event-card fade-up" data-tip="Harvey Weinstein perfected the Oscar campaign at Miramax, winning Best Picture with Shakespeare in Love over Saving Private Ryan in 1999.">
-      <div class="event-year">1999 · MIRAMAX</div>
+      <div class="event-year card-year">1999 · MIRAMAX</div>
       <h3>Shakespeare in Love Stuns</h3>
       <p>Harvey Weinstein's Miramax perfects the aggressive Oscar campaign, steering Shakespeare in Love to Best Picture over Saving Private Ryan in one of the most controversial upsets in Academy history. The modern Oscar race is born.</p>
     </div>
     <div class="event-card fade-up" data-tip="Titanic matched Ben-Hur's record of 11 wins in 1998 and became the highest-grossing film of all time at the time.">
-      <div class="event-year">1998 · RECORD</div>
+      <div class="event-year card-year">1998 · RECORD</div>
       <h3>Titanic Matches the Record</h3>
       <p>James Cameron's epic claims 11 Oscars, matching Ben-Hur's 38-year-old record. Cameron infamously shouts "I'm king of the world!" at the podium — capturing both the triumph and the hubris of Hollywood at the millennium's edge.</p>
     </div>
@@ -1067,40 +1115,41 @@ footer {
   </div></div>
   <div class="events-grid">
     <div class="event-card fade-up" data-tip="Halle Berry and Denzel Washington both won acting Oscars on the same night in 2002 — a historic first.">
-      <div class="event-year">2002 · MILESTONE</div>
+      <div class="event-year card-year">2002 · MILESTONE</div>
       <h3>Berry & Washington Make History</h3>
       <p>Halle Berry becomes the first Black woman to win Best Actress (for Monster's Ball), and Denzel Washington wins Best Actor the same night (for Training Day). Sidney Poitier receives an honorary Oscar. A night unlike any other.</p>
     </div>
     <div class="event-card fade-up" data-tip="The Return of the King won all 11 of its nominations in 2004, completing the Lord of the Rings trilogy's Oscar journey.">
-      <div class="event-year">2004 · SWEEP</div>
+      <div class="event-year card-year">2004 · SWEEP</div>
       <h3>Return of the King: 11 from 11</h3>
       <p>Peter Jackson's finale wins every award it's nominated for — the only time a film has achieved this feat with 11 nominations. Fantasy and genre cinema receives its ultimate Academy validation.</p>
     </div>
     <div class="event-card fade-up" data-tip="The #OscarsSoWhite hashtag was coined by April Reign in 2015 after two consecutive years of all-white acting nominees.">
-      <div class="event-year">2016 · RECKONING</div>
+      <div class="event-year card-year">2016 · RECKONING</div>
       <h3>#OscarsSoWhite</h3>
       <p>April Reign's hashtag ignites a global conversation about Hollywood's diversity problem after two consecutive years of all-white acting nominees. The Academy pledges to double its number of women and minority members by 2020.</p>
     </div>
     <div class="event-card fade-up" data-tip="Warren Beatty announced the wrong Best Picture winner at the 2017 ceremony, creating the most infamous moment in Oscar history.">
-      <div class="event-year">2017 · CHAOS</div>
+      <div class="event-year card-year">2017 · CHAOS</div>
       <h3>Moonlight vs. La La Land: Envelopegate</h3>
       <p>In the most shocking moment in Oscar history, La La Land is announced as Best Picture winner — then the mistake is discovered. Moonlight is the actual winner. PwC accountants hand over the wrong envelope. The world watches in disbelief.</p>
     </div>
     <div class="event-card fade-up" data-tip="Parasite won Best Picture, Best Director, Best International Feature Film, and Best Original Screenplay — the first non-English film to win the top prize.">
-      <div class="event-year">2020 · BARRIER</div>
+      <div class="event-year card-year">2020 · BARRIER</div>
       <h3>Parasite: The First Non-English Best Picture</h3>
       <p>Bong Joon-ho's class-warfare thriller becomes the first non-English language film to win Best Picture, four Oscars in total. "Subtitles are not a barrier," Bong says — and the Academy finally seems to agree.</p>
     </div>
   </div>
 </section>
 
-<!-- PARALLAX 2 -->
-<div class="parallax-block" style="background:#8B1A2C;color:#F5E4A8;">
-  <div class="parallax-inner" data-parallax="0.07">
-    <div class="parallax-quote" style="color:#F5E4A8;">
-      "Once you overcome the<br><span class="parallax-highlight" style="color:#E8C96A;">one-inch tall barrier</span> of subtitles,<br>you will be introduced to so many more amazing films."
+<!-- QUOTE BAND 2 -->
+<div class="quote-band" style="background:#8B1A2C;color:#F5E4A8;">
+  <div class="quote-band-inner">
+    <div class="pq-text" style="color:#F5E4A8;">
+      <span class="quote-mark" style="color:#E8C96A;">&ldquo;</span>
+      Once you overcome the<br><span class="pq-hl" style="color:#E8C96A;">one-inch tall barrier</span> of subtitles,<br>you will be introduced to so many more amazing films.
     </div>
-    <div class="parallax-attr" style="color:rgba(245,228,168,0.6)">— Bong Joon-ho, 2020 Academy Awards</div>
+    <div class="pq-attr" style="color:rgba(245,228,168,0.6)">— Bong Joon-ho · 2020 Academy Awards</div>
   </div>
 </div>
 
@@ -1112,32 +1161,32 @@ footer {
   </div></div>
   <div class="events-grid">
     <div class="event-card fade-up" data-tip="CODA, a film by Apple TV+, became the first streaming service film to win Best Picture at the 94th Oscars.">
-      <div class="event-year">2022 · STREAMING</div>
+      <div class="event-year card-year">2022 · STREAMING</div>
       <h3>CODA & the Streaming Revolution</h3>
       <p>Apple TV+'s CODA wins Best Picture — the first streaming service film to claim cinema's top prize. The theatrical/streaming divide that has defined Hollywood since COVID collapses at the moment that matters most.</p>
     </div>
     <div class="event-card fade-up" data-tip="Will Smith slapped presenter Chris Rock at the 94th Academy Awards ceremony in March 2022, then won Best Actor later that evening.">
-      <div class="event-year">2022 · INCIDENT</div>
+      <div class="event-year card-year">2022 · INCIDENT</div>
       <h3>Will Smith and the Slap Heard Round the World</h3>
       <p>Will Smith strikes presenter Chris Rock on live television after a joke about Jada Pinkett Smith's alopecia, then proceeds to win Best Actor for King Richard. The Academy eventually banned Smith for 10 years.</p>
     </div>
     <div class="event-card fade-up" data-tip="Everything Everywhere All at Once won 7 Oscars in 2023, including Best Picture, Best Director, and acting awards for Michelle Yeoh and Ke Huy Quan.">
-      <div class="event-year">2023 · JOY</div>
+      <div class="event-year card-year">2023 · JOY</div>
       <h3>Everything Everywhere Wins Everything</h3>
       <p>The A24 multiverse epic sweeps with 7 Oscars — Michelle Yeoh becomes the first Asian woman to win Best Actress, Ke Huy Quan returns to Hollywood glory, and the Academy embraces maximalist storytelling.</p>
     </div>
     <div class="event-card fade-up" data-tip="Oppenheimer won Best Picture at the 96th Academy Awards, and Christopher Nolan won his first Best Director Oscar.">
-      <div class="event-year">2024 · NOLAN</div>
+      <div class="event-year card-year">2024 · NOLAN</div>
       <h3>Oppenheimer & Nolan's Long-Awaited Win</h3>
       <p>Christopher Nolan wins his first Best Director Oscar for his atomic bomb epic, which wins 7 awards total. Cillian Murphy takes Best Actor. The blockbuster-art divide, once again, dissolves under the right circumstances.</p>
     </div>
     <div class="event-card fade-up" data-tip="Anora, directed by Sean Baker, swept five awards at the 97th Oscars including Best Picture, Best Director, and Best Actress for Mikey Madison.">
-      <div class="event-year">2025 · 97TH OSCARS</div>
+      <div class="event-year card-year">2025 · 97TH OSCARS</div>
       <h3>Anora Sweeps — Indie Cinema Wins Again</h3>
       <p>Sean Baker's low-budget indie Anora dominates the 97th ceremony, winning Best Picture, Best Director, Best Actress for Mikey Madison, and two more. Conan O'Brien hosts to widespread acclaim. A triumph for independent cinema over blockbuster prestige.</p>
     </div>
     <div class="event-card fade-up" data-tip="Sinners received a record 16 nominations for the 98th Academy Awards — the most in Oscar history — surpassing the previous record of 14 shared by All About Eve, Titanic, and La La Land.">
-      <div class="event-year">2026 · 98TH OSCARS</div>
+      <div class="event-year card-year">2026 · 98TH OSCARS</div>
       <h3>Sinners Makes Oscar History</h3>
       <p>Ryan Coogler's genre-defying vampire horror set in the Jim Crow South earns a record 16 nominations — more than any film in Academy history. Michael B. Jordan receives his first acting nomination. The 98th ceremony airs March 15, with Conan O'Brien returning as host.</p>
     </div>
@@ -1252,40 +1301,64 @@ footer {
   <div style="background:#8B6914"></div>
 </div>
 
+<!-- SERIES COLOR BAR — required immediately above footer -->
+<div style="display:flex;height:3px;">
+  <div style="background:#00D4F0;flex:2;"></div>
+  <div style="background:#0055EE;flex:1;"></div>
+  <div style="background:#39E07A;flex:1;"></div>
+  <div style="background:#FF5C20;flex:1;"></div>
+  <div style="background:var(--border);flex:5;"></div>
+</div>
+
 <!-- FOOTER -->
 <footer>
-  <div class="footer-top">
-    <div>
-      <div class="footer-left-title">A (Brief) History of The Oscars_</div>
-      <div class="footer-left-sub">Part of the A (Brief) History of Everything_ series · Guide 003</div>
+  <div>
+    <div class="footer-brand">A (Brief) History of The Oscars_ <span>/</span> History</div>
+    <div class="footer-note">From a private banquet in 1929 to the world's most watched awards ceremony — nearly a century of cinema's grandest night.</div>
+  </div>
+  <div>
+    <div class="footer-col-label">Part of</div>
+    <div class="footer-note">A (Brief) History of Everything_<br>
+      <a href="https://abriefhistoryofeverything.com">abriefhistoryofeverything.com ↗</a>
     </div>
-    <div class="footer-social-wrap">
-      <div class="footer-bottom-copy">Share this guide</div>
-      <div class="footer-social">
-        <a href="https://twitter.com/intent/tweet?url=https://abriefhistoryoftheoscars.com&text=A%20(Brief)%20History%20of%20the%20Oscars%20%E2%80%94%20nearly%20a%20century%20of%20cinema%27s%20grandest%20night." target="_blank" rel="noopener">𝕏 &nbsp;Share on X</a>
-        <a href="https://bsky.app/intent/compose?text=A%20(Brief)%20History%20of%20the%20Oscars%20%E2%80%94%20nearly%20a%20century%20of%20cinema%27s%20grandest%20night.%20https://abriefhistoryoftheoscars.com" target="_blank" rel="noopener">&#9729; Share on Bluesky</a>
-        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://abriefhistoryoftheoscars.com" target="_blank" rel="noopener">Share on LinkedIn</a>
-      </div>
+    <div class="footer-social" style="margin-top:12px;">
+      <a href="https://bsky.app/intent/compose?text=A%20(Brief)%20History%20of%20the%20Oscars%20%E2%80%94%20nearly%20a%20century%20of%20cinema%27s%20grandest%20night.%20https://abriefhistoryoftheoscars.com" target="_blank" rel="noopener">&#9729; Share on Bluesky</a>
     </div>
   </div>
-  <div class="footer-base">
-    <a href="https://abriefhistoryofeverything.com">abriefhistoryofeverything.com</a>
-    <span>© 2026</span>
+  <div>
+    <div class="footer-col-label">Typefaces</div>
+    <div class="footer-note">Cormorant Garamond — Display, Headlines<br>DM Sans — Body, Labels, UI</div>
   </div>
 </footer>
+
+<div class="footer-bar">
+  <span>A (Brief) History of The Oscars — Chronological Index · 6 Eras</span>
+  <div class="footer-bar-links">
+    <a href="https://twitter.com/intent/tweet?url=https://abriefhistoryoftheoscars.com&text=A%20(Brief)%20History%20of%20the%20Oscars%20%E2%80%94%20nearly%20a%20century%20of%20cinema%27s%20grandest%20night." target="_blank" rel="noopener">Share on X</a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://abriefhistoryoftheoscars.com" target="_blank" rel="noopener">Share on LinkedIn</a>
+  </div>
+</div>
 
 <script>
 (function(){
   /* THEME */
   const btn = document.getElementById('theme-btn');
+  // Restore saved theme on load
+  const savedTheme = localStorage.getItem('abh-theme');
+  if(savedTheme){
+    document.documentElement.dataset.theme = savedTheme;
+    btn.textContent = savedTheme === 'light' ? '◑ DARK' : '☀ LIGHT';
+  }
   btn.addEventListener('click', function(){
     const d = document.documentElement;
     if(d.dataset.theme === 'dark'){
       d.dataset.theme = 'light';
       btn.textContent = '◑ DARK';
+      localStorage.setItem('abh-theme', 'light');
     } else {
       d.dataset.theme = 'dark';
       btn.textContent = '☀ LIGHT';
+      localStorage.setItem('abh-theme', 'dark');
     }
   });
 
@@ -1347,23 +1420,19 @@ footer {
     fadeEls.forEach(function(el){ el.classList.add('visible'); });
   }
 
-  /* PARALLAX */
-  if(!isTouch){
-    const pBlocks = document.querySelectorAll('[data-parallax]');
-    let ticking = false;
-    window.addEventListener('scroll', function(){
-      if(!ticking){
-        requestAnimationFrame(function(){
-          pBlocks.forEach(function(el){
-            const mul = parseFloat(el.dataset.parallax) || 0.11;
-            const rect = el.closest('.parallax-block').getBoundingClientRect();
-            const cy = rect.top + rect.height / 2;
-            const off = (cy - window.innerHeight / 2) * mul;
-            el.style.transform = 'translateY(' + off + 'px)';
-          });
-          ticking = false;
-        });
-        ticking = true;
+  /* SHARE DROPDOWN */
+  const shareBtn = document.getElementById('share-btn');
+  const shareDropdown = document.getElementById('shareDropdown');
+  const shareWrap = document.getElementById('shareWrap');
+  if(shareBtn && shareDropdown){
+    shareBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      const isOpen = shareDropdown.style.display === 'block';
+      shareDropdown.style.display = isOpen ? 'none' : 'block';
+    });
+    document.addEventListener('click', function(e){
+      if(!shareWrap.contains(e.target)){
+        shareDropdown.style.display = 'none';
       }
     });
   }
