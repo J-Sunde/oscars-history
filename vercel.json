@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "https://abriefhistoryofeverything.com/oscars.html",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "destination": "https://abriefhistoryofeverything.com/oscars.html",
+      "permanent": true
+    }
+  ]
+}
